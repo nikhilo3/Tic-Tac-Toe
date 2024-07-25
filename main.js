@@ -22,7 +22,7 @@ boxes.forEach((box) => {
     box.addEventListener("click", () => {
         if (trunO) {
             // box.innerText = "O";
-            box.innerHTML = `<svg width="152" height="152" viewBox="0 0 152 152" fill="none" xmlns="http://www.w3.org/2000/svg">
+            box.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 152 152" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g style="mix-blend-mode:hard-light" filter="url(#filter0_f_14_1064)">
 <mask id="path-1-inside-1_14_1064" fill="white">
 <path d="M140 76C140 111.346 111.346 140 76 140C40.6538 140 12 111.346 12 76C12 40.6538 40.6538 12 76 12C111.346 12 140 40.6538 140 76ZM31.2 76C31.2 100.742 51.2576 120.8 76 120.8C100.742 120.8 120.8 100.742 120.8 76C120.8 51.2576 100.742 31.2 76 31.2C51.2576 31.2 31.2 51.2576 31.2 76Z"/>
@@ -100,7 +100,7 @@ boxes.forEach((box) => {
             trunO = false;
         } else {
             // box.innerText = "X";
-            box.innerHTML = `<svg width="152" height="152" viewBox="0 0 152 152" fill="none" xmlns="http://www.w3.org/2000/svg">
+            box.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 152 152" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g style="mix-blend-mode:hard-light" filter="url(#filter0_f_14_1056)">
 <path d="M77.2257 93.2868L76 92.0612L74.7744 93.2868L33.121 134.94C28.6858 139.375 21.4949 139.375 17.0597 134.94C12.6245 130.505 12.6245 123.314 17.0597 118.879L58.7131 77.2256L59.9388 75.9999L58.7131 74.7743L17.0599 33.121C12.6247 28.6858 12.6247 21.4949 17.0599 17.0597C21.4951 12.6245 28.686 12.6245 33.1212 17.0597L74.7744 58.713L76 59.9386L77.2257 58.713L118.879 17.0597C123.314 12.6245 130.505 12.6245 134.94 17.0597C139.375 21.4949 139.375 28.6858 134.94 33.121L93.2869 74.7743L92.0613 75.9999L93.2869 77.2256L134.94 118.879C139.376 123.314 139.376 130.505 134.94 134.94C130.505 139.375 123.314 139.375 118.879 134.94L77.2257 93.2868Z" stroke="#FF5C00" stroke-width="3.46667"/>
 </g>
@@ -165,8 +165,26 @@ boxes.forEach((box) => {
         box.disabled = true;
 
         checkWinner();
+        checkDraw()
+
     });
 });
+
+const checkDraw = () => {
+    let isDraw = true;
+
+    for (let box of boxes) {
+        if (box.innerHTML === "") {
+            isDraw = false;
+            break;
+        }
+    }
+
+    if (isDraw) {
+        msg.textContent = "Match Draw";
+        msg_container.classList.remove('hide');
+    }
+};
 
 
 const checkWinner = () => {
@@ -177,7 +195,7 @@ const checkWinner = () => {
         let pos2 = boxes[pattern[1]].innerHTML
         let pos3 = boxes[pattern[2]].innerHTML
 
-        console.log(pos1,pos2,pos3);
+        // console.log(pos1,pos2,pos3);
 
 
         if (pos1 != "" && pos1 === pos2 && pos2 === pos3) {
@@ -190,8 +208,9 @@ const checkWinner = () => {
     }
 };
 
-
 const showWinner = () => {
+
+
     msg.textContent = `${trunO ? 'X' : 'O'} Wins!`
     msg_container.classList.remove('hide');
 }
